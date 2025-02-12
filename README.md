@@ -49,7 +49,7 @@ DATABASE_URL=postgresql://user:password@localhost:5432/shopnest
 ### 4️⃣ Run the Development Server
 
 ```bash
-npm run dev
+    turbo dev
 ```
 
 ## 🌍 Deployment

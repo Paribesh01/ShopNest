@@ -13,8 +13,9 @@
     ".": "./src/index.ts"
   },
   "scripts": {
-    "db:generate": "prisma generate",
-    "db:migrate": "prisma migrate dev --skip-generate",
-    "db:deploy": "prisma migrate deploy"
+    "copy-env": "cp ../../.env .env",
+    "db:migrate": "npm run copy-env && prisma migrate dev",
+    "db:generate": "npm run copy-env && prisma generate",
+    "db:deploy": "npm run copy-env && prisma migrate deploy"
   }
 }
