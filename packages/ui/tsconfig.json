@@ -1,8 +1,17 @@
 {
   "extends": "@repo/typescript-config/react-library.json",
   "compilerOptions": {
-    "outDir": "dist"
+    "outDir": "dist",
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["./*"]
+    }
   },
-  "include": ["src"],
+  "include": [
+    "src",
+    "../../apps/user-fe/components/marquee.tsx",
+    "../../apps/user-fe/components/footer.tsx",
+    "../../apps/user-fe/components/navbar.tsx"
+  ],
   "exclude": ["node_modules", "dist"]
 }

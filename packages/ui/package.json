@@ -3,9 +3,16 @@
   "version": "0.0.0",
   "private": true,
   "exports": {
+    "./utils": "./src/lib/utils.ts",
     "./button": "./src/button.tsx",
     "./card": "./src/card.tsx",
-    "./code": "./src/code.tsx"
+    "./code": "./src/code.tsx",
+    "./dialog": "./src/dialog.tsx",
+    "./form": "./src/form.tsx",
+    "./label": "./src/label.tsx",
+    "./input": "./src/input.tsx",
+    "./select": "./src/select.tsx",
+    "./sonner": "./src/sonner.tsx"
   },
   "scripts": {
     "lint": "eslint . --max-warnings 0",
@@ -15,15 +22,29 @@
   "devDependencies": {
     "@repo/eslint-config": "*",
     "@repo/typescript-config": "*",
-    "@turbo/gen": "^2.4.0",
-    "@types/node": "^22.13.0",
-    "@types/react": "19.0.8",
-    "@types/react-dom": "19.0.3",
-    "eslint": "^9.20.0",
-    "typescript": "5.7.3"
+    "@turbo/gen": "^1.12.4",
+    "@types/node": "^20.11.24",
+    "@types/react": "^18.2.55",
+    "@types/react-dom": "^18.2.19",
+    "autoprefixer": "^10.4.16",
+    "postcss": "^8.4.33",
+    "tailwindcss": "^3.4.1",
+    "typescript": "^5.3.3"
   },
   "dependencies": {
-    "react": "^19.0.0",
-    "react-dom": "^19.0.0"
+    "@hookform/resolvers": "^3.10.0",
+    "@radix-ui/react-dialog": "^1.0.5",
+    "@radix-ui/react-label": "^2.1.1",
+    "@radix-ui/react-slot": "^1.1.1",
+    "class-variance-authority": "^0.7.1",
+    "clsx": "^2.1.1",
+    "input-otp": "^1.4.2",
+    "lucide-react": "^0.323.0",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "react-hook-form": "^7.54.2",
+    "tailwind-merge": "^2.6.0",
+    "tailwindcss-animate": "^1.0.7",
+    "zod": "^3.24.1"
   }
 }
