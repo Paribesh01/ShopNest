@@ -27,14 +27,14 @@ ShopNest is a **multi-tenant e-commerce website builder** that allows users to c
 ### 1️⃣ Clone the Repository
 
 ```bash
-git clone https://github.com/yourusername/shopnest.git
-cd shopnest
+git clone https://github.com/Paribesh01/ShopNest
+cd ShopNest
 ```
 
 ### 2️⃣ Install Dependencies
 
 ```bash
-npm install  # or yarn install
+yarn
 ```
 
 ### 3️⃣ Configure Environment Variables
@@ -43,23 +43,12 @@ Create a `.env` file and add the necessary environment variables:
 
 ```env
 DATABASE_URL=postgresql://user:password@localhost:5432/shopnest
-NEXTAUTH_SECRET=your_secret
-NEXT_PUBLIC_API_URL=http://localhost:4000
+
 ```
 
 ### 4️⃣ Run the Development Server
 
-#### Start Backend (NestJS)
-
 ```bash
-cd backend
-npm run start:dev
-```
-
-#### Start Frontend (Next.js)
-
-```bash
-cd frontend
 npm run dev
 ```
 
