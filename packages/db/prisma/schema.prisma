@@ -50,15 +50,18 @@ model Store {
   owner     User       @relation("StoreOwner", fields: [ownerId], references: [id])
   members   StoreUser[]
   products  Product[]
+  category   Category[]
   orders    Order[]
 }
 
 
 
 model Category {
-  id        String    @id @default(uuid())
-  name      String    @unique
-  products  Product[]
+  id       String   @id @default(uuid())
+  name     String   @unique
+  storeId  String   // Link category to a store
+  store    Store    @relation(fields: [storeId], references: [id])
+  products Product[]
 }
   
 model Product {
