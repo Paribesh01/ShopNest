@@ -12,9 +12,118 @@ datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
 }
+
+
+
 model User {
-  id        Int      @id @default(autoincrement())
-  createdAt DateTime @default(now())
+  id        String   @id @default(uuid())
+  name      String
   email     String   @unique
-  name      String?
+  password  String   
+  role      UserRole @default(STORE_OWNER)  
+  createdAt DateTime @default(now())
+
+  ownedStores Store[]     @relation("StoreOwner") 
+  stores      StoreUser[] 
+}
+
+
+model StoreUser {
+  id        String   @id @default(uuid())
+  userId    String
+  storeId   String
+  role      StoreRole @default(MEMBER)
+  
+  user      User   @relation(fields: [userId], references: [id])
+  store     Store  @relation(fields: [storeId], references: [id])
+
+  @@unique([userId, storeId])  
+}
+
+
+model Store {
+  id        String   @id @default(uuid())
+  name      String
+  ownerId   String
+  createdAt DateTime @default(now())
+
+  owner     User       @relation("StoreOwner", fields: [ownerId], references: [id])
+  members   StoreUser[]
+  products  Product[]
+  orders    Order[]
+}
+
+
+model Product {
+  id          String   @id @default(uuid())
+  name        String
+  description String?
+  price       Decimal
+  stock       Int      @default(0)
+  imageUrl    String?
+  storeId     String
+  createdAt   DateTime @default(now())
+
+  store       Store    @relation(fields: [storeId], references: [id])
+  orderItems  OrderItem[]
+}
+
+
+model Order {
+  id        String   @id @default(uuid())
+  storeId   String
+  status    OrderStatus @default(PENDING)
+  total     Decimal
+  createdAt DateTime @default(now())
+
+  store      Store     @relation(fields: [storeId], references: [id])
+  orderItems OrderItem[]
+  payment    Payment?
+}
+
+
+model OrderItem {
+  id        String   @id @default(uuid())
+  orderId   String
+  productId String
+  quantity  Int
+  price     Decimal
+
+  order     Order   @relation(fields: [orderId], references: [id])
+  product   Product @relation(fields: [productId], references: [id])
+}
+
+
+model Payment {
+  id        String   @id @default(uuid())
+  orderId   String   @unique
+  amount    Decimal
+  status    PaymentStatus @default(PENDING)
+  createdAt DateTime @default(now())
+
+  order     Order   @relation(fields: [orderId], references: [id])
+}
+
+
+enum UserRole {
+  SUPER_ADMIN  
+  STORE_OWNER  
+}
+
+enum StoreRole {
+  ADMIN  
+  MEMBER 
+}
+
+enum OrderStatus {
+  PENDING
+  SHIPPED
+  DELIVERED
+  CANCELLED
+}
+
+enum PaymentStatus {
+  PENDING
+  COMPLETED
+  FAILED
 }
