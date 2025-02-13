@@ -94,6 +94,7 @@ model Order {
   store      Store     @relation(fields: [storeId], references: [id])
   orderItems OrderItem[]
   payment    Payment?
+  details    OrderDetails?
 }
 
 
@@ -117,6 +118,23 @@ model Payment {
   createdAt DateTime @default(now())
 
   order     Order   @relation(fields: [orderId], references: [id])
+}
+
+model OrderDetails {
+  id              String   @id @default(uuid())
+  orderId         String   @unique
+  customerName    String
+  email           String
+  phoneNumber     String
+  address         String
+  city            String
+  state           String
+  postalCode      String
+  country         String
+  additionalNotes String?
+  createdAt       DateTime @default(now())
+
+  order           Order    @relation(fields: [orderId], references: [id])
 }
 
 

@@ -25,7 +25,7 @@ export const createProduct = async (req: Request, res: Response) => {
       },
     });
 
-    res.status(201).json(product);
+    res.status(201).json({ data: product });
   } catch (error: unknown) {
     res.status(500).json({
       error: error instanceof Error ? error.message : "Internal Server Error",
@@ -36,7 +36,7 @@ export const createProduct = async (req: Request, res: Response) => {
 export const getAllProducts = async (req: Request, res: Response) => {
   try {
     const products = await prisma.product.findMany();
-    res.json(products);
+    res.json({ data: products });
   } catch (error: unknown) {
     res.status(500).json({
       error: error instanceof Error ? error.message : "Internal Server Error",
@@ -51,7 +51,7 @@ export const getProductById = async (req: Request, res: Response) => {
 
     if (!product) res.status(404).json({ message: "Product not found" });
 
-    res.json(product);
+    res.json({ data: product });
   } catch (error: unknown) {
     res.status(500).json({
       error: error instanceof Error ? error.message : "Internal Server Error",
@@ -64,7 +64,7 @@ export const getProductsByStore = async (req: Request, res: Response) => {
     const { storeId } = req.params;
     const products = await prisma.product.findMany({ where: { storeId } });
 
-    res.json(products);
+    res.json({ data: products });
   } catch (error: unknown) {
     res.status(500).json({
       error: error instanceof Error ? error.message : "Internal Server Error",
@@ -95,7 +95,7 @@ export const updateProduct = async (req: Request, res: Response) => {
       data: { name, description, price, stock, imageUrl, categoryId },
     });
 
-    res.json(updatedProduct);
+    res.json({ data: updatedProduct });
   } catch (error: unknown) {
     res.status(500).json({
       error: error instanceof Error ? error.message : "Internal Server Error",
