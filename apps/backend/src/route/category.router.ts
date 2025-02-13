@@ -12,7 +12,7 @@ import { categorySchema } from "../schema/category";
 const categoryRouter = express.Router();
 
 categoryRouter.post(
-  "/",
+  "/:storeId",
   authenticateToken(),
   validateSchema(categorySchema),
   createCategory
