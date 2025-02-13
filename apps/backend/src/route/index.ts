@@ -1,6 +1,7 @@
 import express from "express";
 import authRouter from "./auth.router";
 import storeRouter from "./store.router";
+import categoryRouter from "./category.router";
 
 const router = express.Router();
 
@@ -10,5 +11,6 @@ router.get("/", (req, res) => {
 
 router.use("/auth", authRouter);
 router.use("/store", storeRouter);
+router.use("/category", categoryRouter);
 
 export default router;

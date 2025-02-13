@@ -59,7 +59,7 @@ model Store {
 model Category {
   id       String   @id @default(uuid())
   name     String   @unique
-  storeId  String   // Link category to a store
+  storeId  String   
   store    Store    @relation(fields: [storeId], references: [id])
   products Product[]
 }
