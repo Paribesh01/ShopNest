@@ -54,6 +54,13 @@ model Store {
 }
 
 
+
+model Category {
+  id        String    @id @default(uuid())
+  name      String    @unique
+  products  Product[]
+}
+  
 model Product {
   id          String   @id @default(uuid())
   name        String
@@ -62,11 +69,16 @@ model Product {
   stock       Int      @default(0)
   imageUrl    String?
   storeId     String
+  categoryId  String?  
   createdAt   DateTime @default(now())
 
   store       Store    @relation(fields: [storeId], references: [id])
+  category    Category? @relation(fields: [categoryId], references: [id]) // Make the relation optional
   orderItems  OrderItem[]
 }
+
+
+
 
 
 model Order {
