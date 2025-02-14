@@ -15,9 +15,13 @@ export const createCategory = async (req: Request, res: Response) => {
       const store = await prisma.store.findFirst({
         where: { id: storeId, ownerId: req.user.id },
       });
-      if (!store) res.status(403).json({ error: "Access denied" });
+      if (!store) {
+        res.status(403).json({ error: "Access denied" });
+        return;
+      }
     } else if (req.user?.role !== "SUPER_ADMIN") {
       res.status(403).json({ error: "Access denied" });
+      return;
     }
 
     const category = await prisma.category.create({
@@ -58,15 +62,20 @@ export const updateCategory = async (req: Request, res: Response) => {
       where: { id },
       include: { store: true },
     });
-    if (!category) res.status(404).json({ error: "Category not found" });
+    if (!category) {
+      res.status(404).json({ error: "Category not found" });
+      return;
+    }
 
     if (
       req.user?.role === "STORE_OWNER" &&
       category?.store.ownerId !== req.user.id
     ) {
       res.status(403).json({ error: "Access denied" });
+      return;
     } else if (req.user?.role !== "SUPER_ADMIN") {
       res.status(403).json({ error: "Access denied" });
+      return;
     }
 
     const updatedCategory = await prisma.category.update({
@@ -92,15 +101,20 @@ export const deleteCategory = async (req: Request, res: Response) => {
       where: { id },
       include: { store: true },
     });
-    if (!category) res.status(404).json({ error: "Category not found" });
+    if (!category) {
+      res.status(404).json({ error: "Category not found" });
+      return;
+    }
 
     if (
       req.user?.role === "STORE_OWNER" &&
       category?.store.ownerId !== req.user.id
     ) {
       res.status(403).json({ error: "Access denied" });
+      return;
     } else if (req.user?.role !== "SUPER_ADMIN") {
       res.status(403).json({ error: "Access denied" });
+      return;
     }
 
     await prisma.category.delete({ where: { id } });

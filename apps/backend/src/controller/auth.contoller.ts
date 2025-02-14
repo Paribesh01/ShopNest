@@ -50,7 +50,10 @@ export const Signup = async (req: Request, res: Response) => {
         email,
       },
     });
-    if (existingUser) res.status(400).json({ message: "User already exists" });
+    if (existingUser) {
+      res.status(400).json({ message: "User already exists" });
+      return;
+    }
 
     const hashedPassword = await bcrypt.hash(password, 10);
 
