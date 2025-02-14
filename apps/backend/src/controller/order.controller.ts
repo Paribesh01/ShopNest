@@ -14,7 +14,8 @@ export const createOrder = async (req: Request, res: Response) => {
     const { storeId } = req.params;
 
     if (!storeId) {
-      return res.status(400).json({ error: "storeId is required" });
+      res.status(400).json({ error: "storeId is required" });
+      return; 
     }
 
     // Calculate total and create order with items
@@ -29,9 +30,10 @@ export const createOrder = async (req: Request, res: Response) => {
     for (const item of orderItems) {
       const product = products.find((p) => p.id === item.productId);
       if (!product) {
-        return res
-          .status(400)
-          .json({ error: `Product ${item.productId} not found` });
+        res
+        .status(400)
+        .json({ error: `Product ${item.productId} not found` });
+        return; 
       }
       total += Number(product.price) * item.quantity;
     }
@@ -89,7 +91,11 @@ export const getStoreOrders = async (req: Request, res: Response) => {
       const store = await prisma.store.findFirst({
         where: { id: storeId, ownerId: req.user.id },
       });
-      if (!store) return res.status(403).json({ error: "Access denied" });
+      if (!store){
+        res.status(403).json({ error: "Access denied" });
+        return;
+
+      } 
     }
 
     const orders = await prisma.order.findMany({
@@ -129,7 +135,8 @@ export const getOrderDetails = async (req: Request, res: Response) => {
     });
 
     if (!order) {
-      return res.status(404).json({ error: "Order not found" });
+      res.status(404).json({ error: "Order not found" });
+      return; 
     }
 
     // Check permissions
@@ -137,7 +144,8 @@ export const getOrderDetails = async (req: Request, res: Response) => {
       req.user?.role === "STORE_OWNER" &&
       order.store.ownerId !== req.user.id
     ) {
-      return res.status(403).json({ error: "Access denied" });
+      res.status(403).json({ error: "Access denied" });
+      return;
     }
 
     res.status(200).json({ data: order });
@@ -160,14 +168,16 @@ export const updateOrder = async (req: Request, res: Response) => {
     });
 
     if (!order) {
-      return res.status(404).json({ error: "Order not found" });
+      res.status(404).json({ error: "Order not found" });
+      return; 
     }
 
     if (
       req.user?.role === "STORE_OWNER" &&
       order.store.ownerId !== req.user.id
     ) {
-      return res.status(403).json({ error: "Access denied" });
+      res.status(403).json({ error: "Access denied" });
+      return; 
     }
 
     const updatedOrder = await prisma.order.update({
@@ -203,14 +213,16 @@ export const deleteOrder = async (req: Request, res: Response) => {
     });
 
     if (!order) {
-      return res.status(404).json({ error: "Order not found" });
+      res.status(404).json({ error: "Order not found" });
+      return; 
     }
 
     if (
       req.user?.role === "STORE_OWNER" &&
       order.store.ownerId !== req.user.id
     ) {
-      return res.status(403).json({ error: "Access denied" });
+      res.status(403).json({ error: "Access denied" });
+      return; 
     }
 
     // Delete order items first (if cascade delete is not set up)
@@ -242,14 +254,16 @@ export const updateOrderStatus = async (req: Request, res: Response) => {
     });
 
     if (!order) {
-      return res.status(404).json({ error: "Order not found" });
+      res.status(404).json({ error: "Order not found" });
+      return; 
     }
 
     if (
       req.user?.role === "STORE_OWNER" &&
       order.store.ownerId !== req.user.id
     ) {
-      return res.status(403).json({ error: "Access denied" });
+      res.status(403).json({ error: "Access denied" });
+      return; 
     }
 
     const updatedOrder = await prisma.order.update({
