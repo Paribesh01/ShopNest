@@ -5,13 +5,15 @@ export const createStore = async (req: Request, res: Response) => {
   try {
     const user = req.user;
     if (!user) res.status(401).json({ error: "Unauthorized" });
-    console.log(user);
     if (user.role !== "STORE_OWNER" && user.role !== "SUPER_ADMIN") {
       res.status(403).json({ error: "Access denied" });
+      return;
     }
     const { name } = req.body;
-    if (!name) res.status(400).json({ error: "Store name is required" });
-
+    if (!name) {
+      res.status(400).json({ error: "Store name is required" });
+      return;
+    }
     const store = await prisma.store.create({
       data: {
         name,
@@ -55,8 +57,10 @@ export const getStoreById = async (req: Request, res: Response) => {
     });
 
     if (!store) res.status(404).json({ error: "Store not found" });
-    if (store?.ownerId !== req.user?.id)
+    if (store?.ownerId !== req.user?.id) {
       res.status(403).json({ error: "Access denied" });
+      return;
+    }
 
     res.json({ data: store });
   } catch (error: unknown) {
@@ -72,12 +76,19 @@ export const updateStore = async (req: Request, res: Response) => {
       where: { id: req.params.storeId },
     });
 
-    if (!store) res.status(404).json({ error: "Store not found" });
-    if (store?.ownerId !== req.user?.id)
+    if (!store) {
+      res.status(404).json({ error: "Store not found" });
+      return;
+    }
+    if (store?.ownerId !== req.user?.id) {
       res.status(403).json({ error: "Access denied" });
-
+      return;
+    }
     const { name } = req.body;
-    if (!name) res.status(400).json({ error: "Store name is required" });
+    if (!name) {
+      res.status(400).json({ error: "Store name is required" });
+      return;
+    }
 
     const updatedStore = await prisma.store.update({
       where: { id: req.params.storeId },
@@ -98,10 +109,14 @@ export const deleteStore = async (req: Request, res: Response) => {
       where: { id: req.params.storeId },
     });
 
-    if (!store) res.status(404).json({ error: "Store not found" });
-    if (store?.ownerId !== req.user?.id)
+    if (!store) {
+      res.status(404).json({ error: "Store not found" });
+      return;
+    }
+    if (store?.ownerId !== req.user?.id) {
       res.status(403).json({ error: "Access denied" });
-
+      return;
+    }
     await prisma.store.delete({ where: { id: req.params.storeId } });
 
     res.json({ message: "Store deleted" });

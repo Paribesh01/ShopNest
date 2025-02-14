@@ -7,10 +7,14 @@ export const createProduct = async (req: Request, res: Response) => {
     const { name, description, price, stock, imageUrl, categoryId } = req.body;
 
     const store = await prisma.store.findUnique({ where: { id: storeId } });
-    if (!store) res.status(404).json({ message: "Store not found" });
+    if (!store) {
+      res.status(404).json({ message: "Store not found" });
+      return;
+    }
 
     if (req.user.role !== "SUPER_ADMIN" && req.user.id !== store?.ownerId) {
       res.status(403).json({ message: "Unauthorized" });
+      return;
     }
 
     const product = await prisma.product.create({
@@ -49,8 +53,10 @@ export const getProductById = async (req: Request, res: Response) => {
     const { id } = req.params;
     const product = await prisma.product.findUnique({ where: { id } });
 
-    if (!product) res.status(404).json({ message: "Product not found" });
-
+    if (!product) {
+      res.status(404).json({ message: "Product not found" });
+      return;
+    }
     res.json({ data: product });
   } catch (error: unknown) {
     res.status(500).json({
@@ -81,13 +87,16 @@ export const updateProduct = async (req: Request, res: Response) => {
       include: { store: true },
     });
 
-    if (!product) res.status(404).json({ message: "Product not found" });
-
+    if (!product) {
+      res.status(404).json({ message: "Product not found" });
+      return;
+    }
     if (
       req.user.role !== "SUPER_ADMIN" &&
       req.user.id !== product?.store.ownerId
     ) {
       res.status(403).json({ message: "Unauthorized" });
+      return;
     }
 
     const updatedProduct = await prisma.product.update({
@@ -112,13 +121,16 @@ export const deleteProduct = async (req: Request, res: Response) => {
       include: { store: true },
     });
 
-    if (!product) res.status(404).json({ message: "Product not found" });
-
+    if (!product) {
+      res.status(404).json({ message: "Product not found" });
+      return;
+    }
     if (
       req.user.role !== "SUPER_ADMIN" &&
       req.user.id !== product?.store.ownerId
     ) {
       res.status(403).json({ message: "Unauthorized" });
+      return;
     }
 
     await prisma.product.delete({ where: { id } });
