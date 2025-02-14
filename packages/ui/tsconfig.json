@@ -4,6 +4,8 @@
     "outDir": "dist",
     "baseUrl": ".",
     "paths": {
+      "@repo/ui/*": ["./*"],
+      "@repo/lib/utils": ["./src/lib/utils.ts"],
       "@/*": ["./*"]
     }
   },
