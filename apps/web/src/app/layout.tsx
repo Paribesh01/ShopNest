@@ -17,8 +17,12 @@ export default function RootLayout({
     <html lang="en">
       <body>
         <Provider>
+          <div className="flex">
           <AppSidebar />
+          <div className="h-full w-full flex items-center justify-center">
           {children}
+          </div>
+          </div>
         </Provider>
       </body>
     </html>

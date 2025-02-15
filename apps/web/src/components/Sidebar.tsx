@@ -30,36 +30,32 @@ import {
     SidebarMenuButton,
     SidebarMenuItem,
 } from "@repo/ui/sidebar"
+import Link from "next/link"
+import { usePathname } from "next/navigation"
 
-// This is sample data - replace with your actual data
 const mainLinks = [
-    { icon: Home, label: "Home", href: "#" },
-    { icon: Users, label: "Store Users", href: "#" },
-    { icon: LayoutGrid, label: "Categories", href: "#" },
-    { icon: Package, label: "Products", href: "#", isActive: true },
-    { icon: Users, label: "Customers", href: "#" },
-    { icon: ShoppingCart, label: "Orders", href: "#" },
-    { icon: MessageSquareWarning, label: "Issues", href: "#" },
-    { icon: Smartphone, label: "Blanxer SMS", href: "#", badge: "NEW" },
-    { icon: Gift, label: "Discount Coupons", href: "#" },
-    { icon: BarChart3, label: "Analytics", href: "#" },
-    { icon: Image, label: "Media", href: "#" },
+    { icon: Home, label: "Home", href: "/dashboard" },
+    { icon: Users, label: "Store Users", href: "/dashboard/users" },
+    { icon: LayoutGrid, label: "Categories", href: "/dashboard/categories" },
+    { icon: Package, label: "Products", href: "/dashboard/products" },
+    { icon: Users, label: "Customers", href: "/dashboard/customers" },
+    { icon: ShoppingCart, label: "Orders", href: "/dashboard/orders" },
 ]
 
 const customizations = [
-    { icon: LayoutGrid, label: "Pages", href: "#" },
-    { icon: Plug2, label: "Plugins", href: "#", badge: "+3 NEW" },
-    { icon: Palette, label: "Appearance", href: "#" },
-    { icon: Settings, label: "Store Setting", href: "#" },
-    { icon: Wallet, label: "Payment Setting", href: "#" },
+    { icon: LayoutGrid, label: "Pages", href: "/dashboard/pages" },
+    { icon: Palette, label: "Appearance", href: "/dashboard/appearance" },
+    { icon: Settings, label: "Store Setting", href: "/dashboard/store_setting" },
+    { icon: Wallet, label: "Payment Setting", href: "/dashboard/payment_setting" },
 ]
 
 export function AppSidebar() {
+    const pathName = usePathname();
     return (
         <SidebarProvider>
             <Sidebar>
                 <SidebarHeader className="border-b border-border p-4">
-                    <div className="flex items-center gap-3">
+                    <Link href='/dashboard' className="flex items-center gap-3">
                         <Avatar className="bg-purple-100">
                             <AvatarFallback className="text-purple-500">B</AvatarFallback>
                         </Avatar>
@@ -67,20 +63,22 @@ export function AppSidebar() {
                             <span className="font-medium">Babu</span>
                             <span className="text-xs text-muted-foreground">OWNER</span>
                         </div>
-                    </div>
+                    </Link>
                 </SidebarHeader>
                 <SidebarContent>
                     <SidebarGroup>
                         <SidebarGroupLabel>Main Links</SidebarGroupLabel>
                         <SidebarGroupContent>
                             <SidebarMenu>
-                                {mainLinks.map((item) => (
+                                {mainLinks.map((item) => {
+                                    const isActive = pathName === item.href
+                                    return (
                                     <SidebarMenuItem key={item.label}>
-                                        <SidebarMenuButton asChild isActive={item.isActive}>
-                                            <a href={item.href} className={`${item.isActive ? "bg-purple-50 text-purple-500" : ""}`}>
+                                        <SidebarMenuButton asChild isActive={isActive}>
+                                            <Link href={item.href} className={`${isActive ? "bg-purple-50 text-purple-500" : ""}`}>
                                                 <item.icon className="h-4 w-4" />
                                                 <span>{item.label}</span>
-                                            </a>
+                                            </Link>
                                         </SidebarMenuButton>
                                         {item.badge && (
                                             <SidebarMenuBadge
@@ -90,7 +88,8 @@ export function AppSidebar() {
                                             </SidebarMenuBadge>
                                         )}
                                     </SidebarMenuItem>
-                                ))}
+                                )}
+                                )}
                             </SidebarMenu>
                         </SidebarGroupContent>
                     </SidebarGroup>
@@ -99,19 +98,22 @@ export function AppSidebar() {
                         <SidebarGroupLabel>Customizations</SidebarGroupLabel>
                         <SidebarGroupContent>
                             <SidebarMenu>
-                                {customizations.map((item) => (
-                                    <SidebarMenuItem key={item.label}>
-                                        <SidebarMenuButton asChild>
-                                            <a href={item.href}>
-                                                <item.icon className="h-4 w-4" />
-                                                <span>{item.label}</span>
-                                            </a>
-                                        </SidebarMenuButton>
-                                        {item.badge && (
-                                            <SidebarMenuBadge className="bg-purple-100 text-purple-500">{item.badge}</SidebarMenuBadge>
-                                        )}
-                                    </SidebarMenuItem>
-                                ))}
+                            {customizations.map((item) => {
+                                    const isActive = pathName === item.href
+                                    return (
+                                        <SidebarMenuItem key={item.label}>
+                                            <SidebarMenuButton asChild isActive={isActive}>
+                                                <Link href={item.href} className={`${isActive ? "bg-purple-50 text-purple-500" : ""}`}>
+                                                    <item.icon className="h-4 w-4" />
+                                                    <span>{item.label}</span>
+                                                </Link>
+                                            </SidebarMenuButton>
+                                            {item.badge && (
+                                                <SidebarMenuBadge className="bg-purple-100 text-purple-500">{item.badge}</SidebarMenuBadge>
+                                            )}
+                                        </SidebarMenuItem>
+                                    )
+                                })}
                             </SidebarMenu>
                         </SidebarGroupContent>
                     </SidebarGroup>
