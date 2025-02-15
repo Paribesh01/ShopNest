@@ -1,7 +1,6 @@
 "use client"
 
-import React,{useCallback,useEffect,useState} from "react"
-
+import * as React from "react"
 import { Trash2 } from "lucide-react"
 import { useRouter } from "next/navigation"
 import { Category } from "./types"
@@ -31,27 +30,10 @@ const initialCategories: Category[] = [
 export default function categories() {
   const router = useRouter()
   const { toast } = useToast()
-  const [categories, setCategories] = useState<Category[]>(initialCategories)
-  const [isLoading, setIsLoading] = useState(true)
-  const [isAddOpen, setIsAddOpen] = useState(false)
-  const [selectedCategory, setSelectedCategory] = useState<Category | null>(null)
-
-  // Fetch Categories
-  const fetchCategories = useCallback(async ()=>{
-    try {
-      
-    } catch (error) {
-      console.log(error);
-      toast({
-        title : "Error",
-        varient : "destructive",
-        description : "Failed to fetch Categories"
-      })
-    }
-    finally {
-      setIsLoading(false)
-    }
-  })
+  const [categories, setCategories] = React.useState<Category[]>(initialCategories)
+   const [isLoading, setIsLoading] = React.useState(true)
+  const [isAddOpen, setIsAddOpen] = React.useState(false)
+  const [selectedCategory, setSelectedCategory] = React.useState<Category | null>(null)
 
   const handleAdd = async (data: Omit<Category, "id">) => {
     // In a real app, this would be an API call
