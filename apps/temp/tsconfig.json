@@ -18,7 +18,9 @@
         "name": "next"
       }
     ],
+    "baseUrl": ".",
     "paths": {
+      // "@repo/lib/utils": ["@repo/ui/utils"],
       "@/*": ["./src/*"]
     }
   },

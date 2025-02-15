@@ -16,9 +16,15 @@
     "./sidebar": "./src/sidebar.tsx",
     "./avatar": "./src/avatar.tsx",
     "./table": "./src/table.tsx",
-    "./toaster" : "./src/toaster.tsx",
-    "./toast" : "./src/toast.tsx",
-    "./use-toast" : "./hooks/use-toast.ts"
+    "./toaster": "./src/toaster.tsx",
+    "./toast": "./src/toast.tsx",
+    "./use-toast": "./hooks/use-toast.ts",
+    "./dropdown-menu": "./src/dropdown-menu.tsx",
+    "./badge": "./src/badge.tsx",
+    "./sheet": "./src/sheet.tsx",
+    "./separator": "./src/separator.tsx",
+    "./radio-group": "./src/radio-group.tsx",
+    "./textarea": "./src/textarea.tsx"
   },
   "scripts": {
     "lint": "eslint . --max-warnings 0",
@@ -41,7 +47,9 @@
     "@hookform/resolvers": "^3.10.0",
     "@radix-ui/react-avatar": "^1.1.3",
     "@radix-ui/react-dialog": "^1.1.6",
+    "@radix-ui/react-dropdown-menu": "^2.1.6",
     "@radix-ui/react-label": "^2.1.2",
+    "@radix-ui/react-radio-group": "^1.2.3",
     "@radix-ui/react-separator": "^1.1.2",
     "@radix-ui/react-slot": "^1.1.2",
     "@radix-ui/react-toast": "^1.2.6",
