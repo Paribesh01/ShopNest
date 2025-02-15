@@ -43,7 +43,7 @@ model StoreUser {
 
 model Store {
   id        String   @id @default(uuid())
-  name      String
+  name      String @unique
   ownerId   String
   createdAt DateTime @default(now())
 

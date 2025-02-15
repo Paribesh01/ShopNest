@@ -10,10 +10,15 @@ export const createStore = async (req: Request, res: Response) => {
       return;
     }
     const { name } = req.body;
-    if (!name) {
-      res.status(400).json({ error: "Store name is required" });
+
+    const existingStore = await prisma.store.findUnique({
+      where: { name },
+    });
+    if (existingStore) {
+      res.status(400).json({ error: "Store already exists" });
       return;
     }
+
     const store = await prisma.store.create({
       data: {
         name,
