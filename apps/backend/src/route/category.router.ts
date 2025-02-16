@@ -13,17 +13,20 @@ const categoryRouter = express.Router();
 
 categoryRouter.post(
   "/:storeId",
-  authenticateToken(),
+  // authenticateToken(),
   validateSchema(categorySchema),
   createCategory
 );
 categoryRouter.get("/", getCategories);
 categoryRouter.put(
   "/:id",
-  authenticateToken(),
+  // authenticateToken(),
   validateSchema(categorySchema),
   updateCategory
 );
-categoryRouter.delete("/:id", authenticateToken(), deleteCategory);
+categoryRouter.delete(
+  "/:id",
+  // authenticateToken(),
+  deleteCategory);
 
 export default categoryRouter;

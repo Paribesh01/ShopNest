@@ -6,7 +6,6 @@ export const categoryApi = {
       const response = await axios.get<any>(`${API_BASE_URL}/category`, {
         withCredentials: true
       });
-      console.log(response.data);
       return response.data;
     },
   

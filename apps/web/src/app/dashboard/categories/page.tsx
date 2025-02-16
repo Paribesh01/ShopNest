@@ -12,58 +12,67 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@
 import { useToast } from "@repo/ui/use-toast"
 import { CategoryForm } from "./category-form"
 
-// This would come from your database
-const initialCategories: Category[] = [
-  {
-    id: 1,
-    name: "Cold Drinks",
-    storeId:
-      "store-id-something",
-  },
-  {
-    id: 2,
-    name: "Fruit",
-    storeId:
-      "store-id-something",
-  },
-]
-
 export default function categories() {
   const router = useRouter()
   const { toast } = useToast()
-  const [categories, setCategories] = React.useState<Category[]>(initialCategories)
-   const [isLoading, setIsLoading] = React.useState(true)
+  const [categories, setCategories] = React.useState<Category[]>([])
+  const [isLoading, setIsLoading] = React.useState(true)
   const [isAddOpen, setIsAddOpen] = React.useState(false)
   const [selectedCategory, setSelectedCategory] = React.useState<Category | null>(null)
 
-  const fetchCategories = async ()=>{
-    const res = await categoryApi.getAll();
-    setCategories(res);
-  }
+  // TODO: you should get this store information from recoil atom or some context
+  const [storeId, setStoreId] = React.useState<string>("cf89e91e-96f6-48df-ab82-d02667c3fc35");// It is hardcoded temporarily 
 
-  React.useEffect(()=>{
-    fetchCategories();
-  },[])
+  const fetchCategories = async () => {
 
-  const handleAdd = async (data: Omit<Category, "id">) => {
-    // In a real app, this would be an API call
-    const newCategory = {
-      id: categories.length + 1,
-      ...data,
+    try {
+      const res = await categoryApi.getAll();
+      setCategories(res.data);
+    } catch (error) {
+      toast({ title: "Error fetching categories", description: error.message, variant: "destructive" });
+    } finally {
+      setIsLoading(false);
     }
-    setCategories([...categories, newCategory])
-    setIsAddOpen(false)
-  }
+  };
+
+  React.useEffect(() => {
+    fetchCategories();
+  }, [])
+
+  const handleAdd = async (data: { name: string }) => {
+    try {
+      const newCategory = await categoryApi.create(storeId, { name: data.name });
+      setCategories([...categories, newCategory.data]);
+      toast({ title: "Category added successfully!" });
+    } catch (error) {
+      toast({ title: "Failed to add category", description: error.message, variant: "destructive" });
+    } finally {
+      setIsAddOpen(false);
+    }
+  };
 
   const handleEdit = async (data: Category) => {
-    // In a real app, this would be an API call
-    setCategories(categories.map((c) => (c.id === data.id ? data : c)))
-    setSelectedCategory(null)
-  }
+    try {
+      const updatedCategory = await categoryApi.update(data.id.toString(), { name: data.name });
+
+      setCategories(categories.map((c) => (c.id === data.id ? { ...c, name: updatedCategory.updatedCategory.name } : c)));
+      setSelectedCategory(null);
+
+      toast({ title: "Category updated successfully", variant: "success" });
+    } catch (error) {
+      toast({ title: "Error updating category", description: error.message, variant: "destructive" });
+    }
+  };
 
   const handleDelete = async (id: number) => {
-    // In a real app, this would be an API call
-    setCategories(categories.filter((c) => c.id !== id))
+    try {
+      await categoryApi.delete(id);
+      setCategories(categories.filter((c) => c.id !== id));
+      toast({ title: "Category Deleted successfully", variant: "success" });
+    } catch (error) {
+      console.log(error);
+      toast({ title: "Error Deleting category", description: error.message, variant: "destructive" });
+    }
   }
 
   return (
