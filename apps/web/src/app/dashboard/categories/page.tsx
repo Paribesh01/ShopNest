@@ -4,6 +4,7 @@ import * as React from "react"
 import { Trash2 } from "lucide-react"
 import { useRouter } from "next/navigation"
 import { Category } from "./types"
+import { categoryApi } from "./APIFunctions"
 
 import { Button } from "@repo/ui/button"
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@repo/ui/dialog"
@@ -16,14 +17,14 @@ const initialCategories: Category[] = [
   {
     id: 1,
     name: "Cold Drinks",
-    image:
-      "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Screenshot%20from%202025-02-15%2009-13-05-Bc0ba743l2T6P8vLdzsBLnihgvCqzT.png",
+    storeId:
+      "store-id-something",
   },
   {
     id: 2,
     name: "Fruit",
-    image:
-      "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Screenshot%20from%202025-02-15%2009-13-05-Bc0ba743l2T6P8vLdzsBLnihgvCqzT.png",
+    storeId:
+      "store-id-something",
   },
 ]
 
@@ -34,6 +35,15 @@ export default function categories() {
    const [isLoading, setIsLoading] = React.useState(true)
   const [isAddOpen, setIsAddOpen] = React.useState(false)
   const [selectedCategory, setSelectedCategory] = React.useState<Category | null>(null)
+
+  const fetchCategories = async ()=>{
+    const res = await categoryApi.getAll();
+    setCategories(res);
+  }
+
+  React.useEffect(()=>{
+    fetchCategories();
+  },[])
 
   const handleAdd = async (data: Omit<Category, "id">) => {
     // In a real app, this would be an API call
@@ -79,11 +89,6 @@ export default function categories() {
               <TableCell>{category.id}</TableCell>
               <TableCell>
                 <div className="flex items-center gap-3">
-                  <img
-                    src={category.image || "/placeholder.svg"}
-                    alt={category.name}
-                    className="h-8 w-8 rounded object-cover"
-                  />
                   <span>{category.name}</span>
                 </div>
               </TableCell>
