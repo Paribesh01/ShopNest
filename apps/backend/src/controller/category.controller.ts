@@ -11,18 +11,20 @@ export const createCategory = async (req: Request, res: Response) => {
       res.status(400).json({ error: "storeId is required" });
     }
 
-    if (req.user?.role === "STORE_OWNER") {
-      const store = await prisma.store.findFirst({
-        where: { id: storeId, ownerId: req.user.id },
-      });
-      if (!store) {
-        res.status(403).json({ error: "Access denied" });
-        return;
-      }
-    } else if (req.user?.role !== "SUPER_ADMIN") {
-      res.status(403).json({ error: "Access denied" });
-      return;
-    }
+      // Temporary comment until authentication in added on frontend 
+
+    // if (req.user?.role === "STORE_OWNER") {
+    //   const store = await prisma.store.findFirst({
+    //     where: { id: storeId, ownerId: req.user.id },
+    //   });
+    //   if (!store) {
+    //     res.status(403).json({ error: "Access denied" });
+    //     return;
+    //   }
+    // } else if (req.user?.role !== "SUPER_ADMIN") {
+    //   res.status(403).json({ error: "Access denied" });
+    //   return;
+    // }
 
     const category = await prisma.category.create({
       data: { name, storeId: storeId as string },
@@ -67,16 +69,18 @@ export const updateCategory = async (req: Request, res: Response) => {
       return;
     }
 
-    if (
-      req.user?.role === "STORE_OWNER" &&
-      category?.store.ownerId !== req.user.id
-    ) {
-      res.status(403).json({ error: "Access denied" });
-      return;
-    } else if (req.user?.role !== "SUPER_ADMIN") {
-      res.status(403).json({ error: "Access denied" });
-      return;
-    }
+    // Tempory comment until authentication is added on frontend
+
+    // if (
+    //   req.user?.role === "STORE_OWNER" &&
+    //   category?.store.ownerId !== req.user.id
+    // ) {
+    //   res.status(403).json({ error: "Access denied" });
+    //   return;
+    // } else if (req.user?.role !== "SUPER_ADMIN") {
+    //   res.status(403).json({ error: "Access denied" });
+    //   return;
+    // }
 
     const updatedCategory = await prisma.category.update({
       where: { id },
@@ -106,16 +110,18 @@ export const deleteCategory = async (req: Request, res: Response) => {
       return;
     }
 
-    if (
-      req.user?.role === "STORE_OWNER" &&
-      category?.store.ownerId !== req.user.id
-    ) {
-      res.status(403).json({ error: "Access denied" });
-      return;
-    } else if (req.user?.role !== "SUPER_ADMIN") {
-      res.status(403).json({ error: "Access denied" });
-      return;
-    }
+    // Temporary comment until authentication is added on frontend
+
+    // if (
+    //   req.user?.role === "STORE_OWNER" &&
+    //   category?.store.ownerId !== req.user.id
+    // ) {
+    //   res.status(403).json({ error: "Access denied" });
+    //   return;
+    // } else if (req.user?.role !== "SUPER_ADMIN") {
+    //   res.status(403).json({ error: "Access denied" });
+    //   return;
+    // }
 
     await prisma.category.delete({ where: { id } });
     res.status(200).json({ message: "Category deleted successfully" });

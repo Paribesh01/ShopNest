@@ -15,7 +15,7 @@ interface CategoryFormProps {
 
 export function CategoryForm({ category, onSubmit }: CategoryFormProps) {
   const [isLoading, setIsLoading] = React.useState(false);
-  const [categoryName,setCategoryName] = React.useState<string | undefined>(category?.name);
+  const [categoryName,setCategoryName] = React.useState<string>(category?.name || "");
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
