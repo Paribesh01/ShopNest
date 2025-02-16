@@ -12,7 +12,7 @@ router.get("/", (req, res) => {
 });
 
 router.use("/auth", authRouter);
-router.use("/store", storeRouter);
+// router.use("/store", storeRouter);
 router.use("/category", categoryRouter);
 router.use("/product", productRouter);
 router.use("/order", orderRouter);

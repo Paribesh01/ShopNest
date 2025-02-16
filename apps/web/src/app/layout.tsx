@@ -18,7 +18,9 @@ export default function RootLayout({
       <body>
         <Provider>
           <div className="flex">
+            <div className="sticky">
           <AppSidebar />
+            </div>
           <div className="h-full w-full flex items-center justify-center">
           {children}
           </div>
