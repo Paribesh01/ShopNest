@@ -12,10 +12,12 @@ export const createProduct = async (req: Request, res: Response) => {
       return;
     }
 
-    if (req.user.role !== "SUPER_ADMIN" && req.user.id !== store?.ownerId) {
-      res.status(403).json({ message: "Unauthorized" });
-      return;
-    }
+    // Temporary comment until authentication is added in frontend
+
+    // if (req.user.role !== "SUPER_ADMIN" && req.user.id !== store?.ownerId) {
+    //   res.status(403).json({ message: "Unauthorized" });
+    //   return;
+    // }
 
     const product = await prisma.product.create({
       data: {
@@ -91,13 +93,16 @@ export const updateProduct = async (req: Request, res: Response) => {
       res.status(404).json({ message: "Product not found" });
       return;
     }
-    if (
-      req.user.role !== "SUPER_ADMIN" &&
-      req.user.id !== product?.store.ownerId
-    ) {
-      res.status(403).json({ message: "Unauthorized" });
-      return;
-    }
+
+    // Temporary comment
+
+    // if (
+    //   req.user.role !== "SUPER_ADMIN" &&
+    //   req.user.id !== product?.store.ownerId
+    // ) {
+    //   res.status(403).json({ message: "Unauthorized" });
+    //   return;
+    // }
 
     const updatedProduct = await prisma.product.update({
       where: { id },
@@ -125,13 +130,16 @@ export const deleteProduct = async (req: Request, res: Response) => {
       res.status(404).json({ message: "Product not found" });
       return;
     }
-    if (
-      req.user.role !== "SUPER_ADMIN" &&
-      req.user.id !== product?.store.ownerId
-    ) {
-      res.status(403).json({ message: "Unauthorized" });
-      return;
-    }
+
+    // Temporary comment
+
+    // if (
+    //   req.user.role !== "SUPER_ADMIN" &&
+    //   req.user.id !== product?.store.ownerId
+    // ) {
+    //   res.status(403).json({ message: "Unauthorized" });
+    //   return;
+    // }
 
     await prisma.product.delete({ where: { id } });
 

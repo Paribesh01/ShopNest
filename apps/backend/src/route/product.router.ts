@@ -15,7 +15,7 @@ const productRouter = express.Router();
 
 productRouter.post(
   "/:storeId",
-  authenticateToken(),
+  // authenticateToken(),
   validateSchema(productSchema),
   createProduct
 );
@@ -24,15 +24,19 @@ productRouter.get("/", authenticateToken(), getAllProducts);
 
 productRouter.get("/:id", authenticateToken(), getProductById);
 
-productRouter.get("/stores/:storeId", authenticateToken(), getProductsByStore);
+productRouter.get("/stores/:storeId",
+  // authenticateToken(),
+  getProductsByStore);
 
 productRouter.put(
   "/:id",
-  authenticateToken(),
+  // authenticateToken(),
   validateSchema(productSchema),
   updateProduct
 );
 
-productRouter.delete("/:id", authenticateToken(), deleteProduct);
+productRouter.delete("/:id",
+  //  authenticateToken(), 
+   deleteProduct);
 
 export default productRouter;
