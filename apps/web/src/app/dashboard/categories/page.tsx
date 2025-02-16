@@ -36,10 +36,16 @@ export default function categories() {
   const [isAddOpen, setIsAddOpen] = React.useState(false)
   const [selectedCategory, setSelectedCategory] = React.useState<Category | null>(null)
 
-  const fetchCategories = async ()=>{
-    const res = await categoryApi.getAll();
-    setCategories(res);
-  }
+  const fetchCategories = async () => {
+    try {
+      const res = await categoryApi.getAll();
+      setCategories(res.data);
+    } catch (error) {
+      toast({ title: "Error fetching categories", description: error.message, variant: "destructive" });
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
   React.useEffect(()=>{
     fetchCategories();
