@@ -1,20 +1,19 @@
 "use client";
 import Image from "next/image";
-import { AspectRatio } from "@/components/ui/aspect-ratio";
-import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
+import { AspectRatio } from "@repo/ui/aspect-ratio";
+import { Badge } from "@repo/ui/badge";
+import { Button } from "@repo/ui/button";
 import {
   Card,
   CardContent,
   CardFooter,
   CardHeader,
   CardTitle,
-} from "@/components/ui/card";
-import { Separator } from "@/components/ui/separator";
+} from "@repo/ui/card";
+import { Separator } from "@repo/ui/separator";
 import { ShoppingCart } from "lucide-react";
 import { useRecoilState } from "recoil";
 import { cartItemState, cartState } from "@/recoil/atom";
-import { toast } from "react-toastify";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 
@@ -38,7 +37,6 @@ export default function ProductOverview({ product, products }: any) {
             : item
         )
       );
-      toast.success("Added to cart");
     } else {
       // Otherwise, add the product to the cart
       setCartItems([...cartItems, { ...product, quantity: 1 }]);

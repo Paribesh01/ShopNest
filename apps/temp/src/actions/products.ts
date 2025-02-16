@@ -4,10 +4,11 @@ const BASE_URL = "http://localhost:8080/api/v1/product";
 
 export async function getProductById(productId: string) {
   try {
-    const response = await axios.get(`${BASE_URL}/${productId}`);
-    return { products: response.data };
+    const response: any = await axios.get(`${BASE_URL}/${productId}`);
+    return { product: response.data.data };
   } catch (error) {
     console.error("Error fetching product:", error);
+    return { product: [] };
     // throw new Error("Failed to fetch product");
   }
 }

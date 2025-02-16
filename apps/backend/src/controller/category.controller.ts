@@ -11,7 +11,7 @@ export const createCategory = async (req: Request, res: Response) => {
       res.status(400).json({ error: "storeId is required" });
     }
 
-      // Temporary comment until authentication in added on frontend 
+    // Temporary comment until authentication in added on frontend
 
     // if (req.user?.role === "STORE_OWNER") {
     //   const store = await prisma.store.findFirst({
@@ -43,9 +43,21 @@ export const createCategory = async (req: Request, res: Response) => {
 
 export const getCategories = async (req: Request, res: Response) => {
   try {
-    const categories = await prisma.category.findMany({
-      where: { storeId: req.params.storeId },
+    console.log("getCategories");
+    console.log(req.params);
+    const store = await prisma.store.findUnique({
+      where: { name: req.params.storeName },
     });
+
+    if (!store) {
+      res.status(404).json({ error: "Store not found" });
+      console.log("store not found");
+      return;
+    }
+    const categories = await prisma.category.findMany({
+      where: { storeId: store.id },
+    });
+    console.log(categories);
     res.status(200).json({ data: categories });
   } catch (error) {
     res.status(500).json({

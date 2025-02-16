@@ -17,7 +17,7 @@ categoryRouter.post(
   validateSchema(categorySchema),
   createCategory
 );
-categoryRouter.get("/", getCategories);
+categoryRouter.get("/:storeName", getCategories);
 categoryRouter.put(
   "/:id",
   // authenticateToken(),
@@ -27,6 +27,7 @@ categoryRouter.put(
 categoryRouter.delete(
   "/:id",
   // authenticateToken(),
-  deleteCategory);
+  deleteCategory
+);
 
 export default categoryRouter;

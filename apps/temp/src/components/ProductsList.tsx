@@ -9,7 +9,7 @@ import { cartItemState, cartState } from "@/recoil/atom";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 
-const ProductsList = ({ products }: any) => {
+const ProductsList = ({ products, storeName }: any) => {
   const router = useRouter();
 
   const [sortBy, setSortBy] = useState("name");
@@ -89,9 +89,11 @@ const ProductsList = ({ products }: any) => {
               />
 
               <h2 className="text-lg font-semibold">
-                <Link href={`/products/${product.id}`}>{product.name}</Link>
+                <Link href={`/${storeName}/products/${product.id}`}>
+                  {product.name}
+                </Link>
               </h2>
-              <p className="text-gray-600">Rs.{product.price.toFixed(2)}</p>
+              <p className="text-gray-600">Rs.{product.price}</p>
               <p className="text-sm text-gray-500 mt-2">{product.category}</p>
             </CardContent>
             <CardFooter className="p-4">

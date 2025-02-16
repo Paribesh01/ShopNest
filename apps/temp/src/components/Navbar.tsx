@@ -9,8 +9,11 @@ import Image from "next/image";
 import image from "@/images/logo.jpg";
 import { useRecoilState } from "recoil";
 import { cartItemState, cartState } from "@/recoil/atom";
+import { useParams } from "next/navigation";
 
 export default function Navbar({ category }: any) {
+  const { storeName } = useParams();
+
   const [isCartOpen, setIsCartOpen] = useRecoilState(cartState);
   const [cartItems, setCartItems] = useRecoilState<any>(cartItemState);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -61,14 +64,14 @@ export default function Navbar({ category }: any) {
             <div className="hidden md:block ml-10">
               <div className="flex items-baseline space-x-4">
                 <Link
-                  href="/fawdfas/"
+                  href={`/${storeName}/`}
                   className="text-gray-600 hover:text-primary px-3 py-2 rounded-md text-sm font-medium"
                 >
                   Home
                 </Link>
                 <div className="relative group">
                   <Link
-                    href="/adfaf/products"
+                    href={`/${storeName}/products`}
                     className="text-gray-600 hover:text-primary px-3 py-2 rounded-md text-sm font-medium inline-flex items-center"
                   >
                     Products <ChevronDown className="ml-1 h-4 w-4" />
@@ -83,7 +86,7 @@ export default function Navbar({ category }: any) {
                       {category.map((category: any) => (
                         <Link
                           key={category.id}
-                          href={`/fdafad/category/${category.name
+                          href={`/${storeName}/category/${category.name
                             .toLowerCase()
                             .replace(" & ", "-")}`}
                           className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900"
@@ -96,13 +99,13 @@ export default function Navbar({ category }: any) {
                   </div>
                 </div>
                 <Link
-                  href="/fadssa/about"
+                  href={`/${storeName}/about`}
                   className="text-gray-600 hover:text-primary px-3 py-2 rounded-md text-sm font-medium"
                 >
                   About
                 </Link>
                 <Link
-                  href="/fadsfsa/contact"
+                  href={`/${storeName}/contact`}
                   className="text-gray-600 hover:text-primary px-3 py-2 rounded-md text-sm font-medium"
                 >
                   Contact
@@ -132,7 +135,7 @@ export default function Navbar({ category }: any) {
                       searchResults.map((product: any) => (
                         <Link
                           key={product.id}
-                          href={`/products/${product.id}`}
+                          href={`/${storeName}/products/${product.id}`}
                           className="flex items-center px-4 py-2 hover:bg-gray-100"
                           onClick={() => setSearchTerm("")}
                         >
@@ -204,7 +207,7 @@ export default function Navbar({ category }: any) {
             </Link>
             <div>
               <Link
-                href="/fdsfa/products"
+                href={`/${storeName}/products`}
                 className="text-gray-600 hover:text-primary block px-3 py-2 rounded-md text-base font-medium"
                 onClick={() => setIsMenuOpen(false)}
               >
@@ -214,7 +217,7 @@ export default function Navbar({ category }: any) {
                 {categories.map((category) => (
                   <Link
                     key={category}
-                    href={`/fdasfas/category/${category
+                    href={`/${storeName}/category/${category
                       .toLowerCase()
                       .replace(" & ", "-")}`}
                     className="text-gray-600 hover:text-primary block px-3 py-2 rounded-md text-sm font-medium"
@@ -226,14 +229,14 @@ export default function Navbar({ category }: any) {
               </div>
             </div>
             <Link
-              href="/fadsfs/about"
+              href={`/${storeName}/about`}
               className="text-gray-600 hover:text-primary block px-3 py-2 rounded-md text-base font-medium"
               onClick={() => setIsMenuOpen(false)}
             >
               About
             </Link>
             <Link
-              href="/fdsaf/contact"
+              href={`/${storeName}/contact`}
               className="text-gray-600 hover:text-primary block px-3 py-2 rounded-md text-base font-medium"
               onClick={() => setIsMenuOpen(false)}
             >
@@ -279,7 +282,7 @@ export default function Navbar({ category }: any) {
                       searchResults.map((product: any) => (
                         <Link
                           key={product.id}
-                          href={`/fdasf/products/${product.id}`}
+                          href={`/${storeName}/products/${product.id}`}
                           className="flex items-center px-4 py-2 hover:bg-gray-100"
                           onClick={() => {
                             setSearchTerm("");
