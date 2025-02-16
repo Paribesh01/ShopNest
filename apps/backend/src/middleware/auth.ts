@@ -13,6 +13,7 @@ export const authenticateToken = () => {
 
     if (!token) {
       res.status(401).json({ message: "Unauthorized: No token provided" });
+      return;
     }
 
     jwt.verify(
