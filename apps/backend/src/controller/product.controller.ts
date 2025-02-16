@@ -69,9 +69,22 @@ export const getProductById = async (req: Request, res: Response) => {
 
 export const getProductsByStore = async (req: Request, res: Response) => {
   try {
-    const { storeId } = req.params;
-    const products = await prisma.product.findMany({ where: { storeId } });
+    console.log("getProductsByStore");
+    const { storeName } = req.params;
+    const store = await prisma.store.findUnique({
+      where: { name: storeName },
+    });
+    if (!store) {
+      res.status(404).json({ message: "Store not found" });
+      console.log("store not found");
+      return;
+    }
 
+    // Temporary comment
+    const products = await prisma.product.findMany({
+      where: { storeId: store.id },
+    });
+    console.log(products);
     res.json({ data: products });
   } catch (error: unknown) {
     res.status(500).json({

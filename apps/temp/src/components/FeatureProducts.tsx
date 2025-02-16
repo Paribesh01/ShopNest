@@ -8,51 +8,10 @@ import { redirect, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { useRecoilState } from "recoil";
 
-export default function FeaturedProducts() {
+export default function FeaturedProducts({ products }: { products: any }) {
   const [isCartOpen, setIsCartOpen] = useRecoilState(cartState);
   const [cartItems, setCartItems] = useRecoilState<any>(cartItemState);
-  const [featuredProducts, setfeaturedProducts] = useState<any>([
-    {
-      id: 1,
-      name: "Wireless Headphones",
-      price: 299.99,
-      quantity: 1,
-      imageUrl:
-        "https://images.unsplash.com/photo-1575936123452-b67c3203c357?fm=jpg&q=60&w=3000&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8aW1hZ2V8ZW58MHx8MHx8fDA%3D",
-    },
-    {
-      id: 2,
-      name: "Smartphone",
-      price: 699.99,
-      quantity: 1,
-      imageUrl:
-        "https://images.unsplash.com/photo-1575936123452-b67c3203c357?fm=jpg&q=60&w=3000&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8aW1hZ2V8ZW58MHx8MHx8fDA%3D",
-    },
-    {
-      id: 3,
-      name: "Laptop",
-      price: 1299.99,
-      quantity: 1,
-      imageUrl:
-        "https://images.unsplash.com/photo-1575936123452-b67c3203c357?fm=jpg&q=60&w=3000&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8aW1hZ2V8ZW58MHx8MHx8fDA%3D",
-    },
-    {
-      id: 4,
-      name: "Wireless Headphones",
-      price: 299.99,
-      quantity: 1,
-      imageUrl:
-        "https://images.unsplash.com/photo-1575936123452-b67c3203c357?fm=jpg&q=60&w=3000&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8aW1hZ2V8ZW58MHx8MHx8fDA%3D",
-    },
-    {
-      id: 5,
-      name: "Smartphone",
-      price: 699.99,
-      quantity: 1,
-      imageUrl:
-        "https://images.unsplash.com/photo-1575936123452-b67c3203c357?fm=jpg&q=60&w=3000&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8aW1hZ2V8ZW58MHx8MHx8fDA%3D",
-    },
-  ]);
+  const [featuredProducts, setfeaturedProducts] = useState<any>(products);
   const router = useRouter();
 
   const handelBuyNow = (product: any) => {
@@ -115,9 +74,7 @@ export default function FeaturedProducts() {
                   <Link href={`products/${product.id}`}>{product.name}</Link>
                 </h3>
                 <div className="flex justify-between items-center">
-                  <p className="text-gray-700 font-bold">
-                    Rs.{product.price.toFixed(2)}
-                  </p>
+                  <p className="text-gray-700 font-bold">Rs.{product.price}</p>
                 </div>
               </CardContent>
 

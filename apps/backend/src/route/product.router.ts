@@ -22,11 +22,9 @@ productRouter.post(
 
 productRouter.get("/", authenticateToken(), getAllProducts);
 
-productRouter.get("/:id", authenticateToken(), getProductById);
+productRouter.get("/:id", getProductById);
 
-productRouter.get("/stores/:storeId",
-  // authenticateToken(),
-  getProductsByStore);
+productRouter.get("/stores/:storeName", getProductsByStore);
 
 productRouter.put(
   "/:id",
@@ -35,8 +33,10 @@ productRouter.put(
   updateProduct
 );
 
-productRouter.delete("/:id",
-  //  authenticateToken(), 
-   deleteProduct);
+productRouter.delete(
+  "/:id",
+  //  authenticateToken(),
+  deleteProduct
+);
 
 export default productRouter;

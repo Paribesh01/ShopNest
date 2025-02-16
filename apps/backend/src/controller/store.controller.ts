@@ -18,10 +18,9 @@ export const createStore = async (req: Request, res: Response) => {
       res.status(400).json({ error: "Store already exists" });
       return;
     }
-
     const store = await prisma.store.create({
       data: {
-        name,
+        name: name.tolowerCase(),
         ownerId: user.id,
       },
     });
