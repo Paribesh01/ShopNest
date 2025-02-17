@@ -1,7 +1,6 @@
 "use client";
 
 import { useState } from "react";
-import Image from "next/image";
 import { Banknote, CreditCard, Trash2 } from "lucide-react";
 import { Button } from "@repo/ui/button";
 import {
@@ -24,7 +23,6 @@ import { RadioGroup, RadioGroupItem } from "@repo/ui/radio-group";
 export default function Checkout() {
   const [cartItems, setCartItems] = useRecoilState<any>(cartItemState);
   const [loading, setLoading] = useState(false);
-  const [mode, setMode] = useState("ONLINE");
 
   // Initialize state for billing details
   const [billingDetails, setBillingDetails] = useState({
@@ -175,31 +173,6 @@ export default function Checkout() {
                     onChange={handleChange}
                   />
                 </div>
-                <div className="space-y-2">
-                  <Label htmlFor="zipCode">Mode Of Payment</Label>
-                  <RadioGroup value={mode} onValueChange={setMode}>
-                    <div className="flex items-center space-x-2">
-                      <RadioGroupItem value="COD" id="cod" />
-                      <Label
-                        htmlFor="cod"
-                        className="flex items-center cursor-pointer"
-                      >
-                        <Banknote className="mr-2 h-4 w-4" />
-                        Cash on Delivery (COD)
-                      </Label>
-                    </div>
-                    <div className="flex items-center space-x-2">
-                      <RadioGroupItem value="ONLINE" id="online" />
-                      <Label
-                        htmlFor="online"
-                        className="flex items-center cursor-pointer"
-                      >
-                        <CreditCard className="mr-2 h-4 w-4" />
-                        Online Payment
-                      </Label>
-                    </div>
-                  </RadioGroup>
-                </div>
               </div>
             </CardContent>
             <CardFooter>
@@ -220,7 +193,7 @@ export default function Checkout() {
               {cartItems.map((item: any) => (
                 <div key={item.id} className="flex items-center space-x-4">
                   <div className="relative w-16 h-16 rounded-md overflow-hidden">
-                    <Image
+                    <img
                       src={item.imageUrl}
                       alt={item.name}
                       className="object-cover"
@@ -229,7 +202,7 @@ export default function Checkout() {
                   <div className="flex-1">
                     <h3 className="font-semibold">{item.name}</h3>
                     <p className="text-sm text-gray-500">
-                      Rs. {item.price.toFixed(2)} x {item.quantity}
+                      Rs. {item.price} x {item.quantity}
                     </p>
                   </div>
                   <div className="flex items-center space-x-2">
@@ -237,6 +210,7 @@ export default function Checkout() {
                       variant="outline"
                       size="icon"
                       onClick={() => updateQuantity(item.id, -1)}
+                      className="bg-white"
                     >
                       -
                     </Button>
@@ -245,6 +219,7 @@ export default function Checkout() {
                       variant="outline"
                       size="icon"
                       onClick={() => updateQuantity(item.id, 1)}
+                      className="bg-white"
                     >
                       +
                     </Button>
@@ -264,7 +239,7 @@ export default function Checkout() {
             <CardFooter className="flex-col space-y-2">
               <div className="flex justify-between w-full">
                 <span>Subtotal</span>
-                <span>Rs. {subtotal.toFixed(2)}</span>
+                <span>Rs. {subtotal}</span>
               </div>
               <div className="flex justify-between w-full">
                 <span>Delivery</span>
@@ -273,7 +248,7 @@ export default function Checkout() {
               <Separator className="my-2" />
               <div className="flex justify-between w-full text-lg font-semibold">
                 <span>Total</span>
-                <span>Rs. {total.toFixed(2)}</span>
+                <span>Rs. {total}</span>
               </div>
             </CardFooter>
           </Card>

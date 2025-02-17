@@ -17,32 +17,7 @@ import { useRecoilState } from "recoil";
 import { cartItemState, cartState } from "@/recoil/atom";
 import Link from "next/link";
 
-// Mock cart items for demonstration
-const initialCartItems = [
-  {
-    id: 1,
-    name: "Wireless Headphones",
-    price: 299.99,
-    quantity: 1,
-    image: "/placeholder.svg?height=80&width=80&text=Headphones",
-  },
-  {
-    id: 2,
-    name: "Smartphone",
-    price: 699.99,
-    quantity: 1,
-    image: "/placeholder.svg?height=80&width=80&text=Smartphone",
-  },
-  {
-    id: 3,
-    name: "Laptop",
-    price: 1299.99,
-    quantity: 1,
-    image: "/placeholder.svg?height=80&width=80&text=Laptop",
-  },
-];
-
-export default function Cart() {
+export default function Cart({ storeName }: any) {
   const [isCartOpen, setIsCartOpen] = useRecoilState(cartState);
   const [cartItems, setCartItems] = useRecoilState<any>(cartItemState);
 
@@ -90,13 +65,12 @@ export default function Cart() {
                 <Link href={`/products/${item.id}`}>
                   <h3 className="font-semibold">{item.name}</h3>
                 </Link>
-                <p className="text-sm text-gray-500">
-                  Rs.{item.price.toFixed(2)}
-                </p>
+                <p className="text-sm text-gray-500">Rs.{item.price}</p>
                 <div className="flex items-center mt-2">
                   <Button
                     variant="outline"
                     size="icon"
+                    className="bg-white"
                     onClick={() => updateQuantity(item.id, -1)}
                   >
                     <Minus className="h-4 w-4" />
@@ -106,6 +80,7 @@ export default function Cart() {
                     variant="outline"
                     size="icon"
                     onClick={() => updateQuantity(item.id, 1)}
+                    className="bg-white"
                   >
                     <Plus className="h-4 w-4" />
                   </Button>
@@ -119,18 +94,16 @@ export default function Cart() {
                   </Button>
                 </div>
               </div>
-              <p className="font-semibold">
-                Rs.{(item.price * item.quantity).toFixed(2)}
-              </p>
+              <p className="font-semibold">Rs.{item.price * item.quantity}</p>
             </div>
           ))}
         </div>
         <Separator className="my-4" />
         <div className="flex justify-between items-center font-semibold text-lg">
           <span>Total:</span>
-          <span>Rs.{totalPrice.toFixed(2)}</span>
+          <span>Rs.{totalPrice}</span>
         </div>
-        <Link href={"/checkout"}>
+        <Link href={`checkout`}>
           <Button
             className="w-full mt-8"
             onClick={() => {
