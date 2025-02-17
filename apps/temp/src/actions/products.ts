@@ -13,10 +13,26 @@ export async function getProductById(productId: string) {
   }
 }
 
-export async function getProductsByStore(storeId: string) {
+export async function getProductsByStore(storeName: string) {
+  try {
+    console.log(`${BASE_URL}/stores/${storeName}`);
+    const response: any = await axios.get(`${BASE_URL}/stores/${storeName}`);
+    return { products: response.data.data };
+  } catch (error) {
+    console.error("Error fetching store products:", error);
+    return { products: [] };
+  }
+}
+
+export async function getProductByCategoryByStore(
+  storeId: string,
+  categoryName: string
+) {
   try {
     console.log(`${BASE_URL}/stores/${storeId}`);
-    const response: any = await axios.get(`${BASE_URL}/stores/${storeId}`);
+    const response: any = await axios.get(
+      `${BASE_URL}/stores/${storeId}/category/${categoryName}`
+    );
     return { products: response.data.data };
   } catch (error) {
     console.error("Error fetching store products:", error);

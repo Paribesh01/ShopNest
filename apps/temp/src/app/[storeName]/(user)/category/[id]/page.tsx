@@ -1,12 +1,12 @@
 // ProductsPage.tsx
-import { getProductsByStore } from "@/actions/products";
+import { getProductByCategoryByStore } from "@/actions/products";
 import ProductsList from "@/components/ProductsList";
 import { notFound } from "next/navigation";
 
 export default async function ProductsPage({ params }: any) {
-  const { storeName } = params;
+  const { storeName, id } = params;
   console.log("this is the prams", params);
-  const { products } = await getProductsByStore(storeName);
+  const { products } = await getProductByCategoryByStore(storeName, id);
   console.log(products);
   if (products.length <= 0) {
     notFound();

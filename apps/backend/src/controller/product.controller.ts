@@ -67,6 +67,46 @@ export const getProductById = async (req: Request, res: Response) => {
   }
 };
 
+export const getProductByCategoryByStore = async (
+  req: Request,
+  res: Response
+) => {
+  try {
+    console.log("getProductByCategoryByStore");
+    const { storeName, categoryName } = req.params;
+    const store = await prisma.store.findUnique({
+      where: { name: storeName },
+    });
+    if (!store) {
+      res.status(404).json({ message: "Store not found" });
+      console.log("store not found");
+      return;
+    }
+
+    const category = await prisma.category.findUnique({
+      where: { name: categoryName, storeId: store.id },
+      include: { store: true },
+    });
+
+    if (!category) {
+      res.status(404).json({ message: "Category not found" });
+      console.log("category not found");
+      return;
+    }
+
+    const products = await prisma.product.findMany({
+      where: { categoryId: category.id },
+      include: { store: true },
+    });
+
+    res.json({ data: products });
+  } catch (error: unknown) {
+    res.status(500).json({
+      error: error instanceof Error ? error.message : "Internal Server Error",
+    });
+  }
+};
+
 export const getProductsByStore = async (req: Request, res: Response) => {
   try {
     console.log("getProductsByStore");
