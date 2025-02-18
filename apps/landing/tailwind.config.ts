@@ -5,7 +5,9 @@ export default {
     "./src/pages/**/*.{js,ts,jsx,tsx,mdx}",
     "./src/components/**/*.{js,ts,jsx,tsx,mdx}",
     "./src/app/**/*.{js,ts,jsx,tsx,mdx}",
-  ],theme: {
+    "../../packages/ui/src/**/*.{js,ts,jsx,tsx,mdx}",
+  ],
+  theme: {
     container: {
       center: true,
       padding: "2rem",
@@ -13,6 +15,9 @@ export default {
         "2xl": "1400px",
       },
     },
+    "../../packages/ui/src/**/*.{js,ts,jsx,tsx,mdx}",
+  ],
+
     extend: {
       colors: {
         border: "hsl(var(--border))",

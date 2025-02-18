@@ -11,17 +11,23 @@ export const createCategory = async (req: Request, res: Response) => {
       res.status(400).json({ error: "storeId is required" });
     }
 
-    if (req.user?.role === "STORE_OWNER") {
-      const store = await prisma.store.findFirst({
-        where: { id: storeId, ownerId: req.user.id },
-      });
-      if (!store) res.status(403).json({ error: "Access denied" });
-    } else if (req.user?.role !== "SUPER_ADMIN") {
-      res.status(403).json({ error: "Access denied" });
-    }
+    // Temporary comment until authentication in added on frontend
+
+    // if (req.user?.role === "STORE_OWNER") {
+    //   const store = await prisma.store.findFirst({
+    //     where: { id: storeId, ownerId: req.user.id },
+    //   });
+    //   if (!store) {
+    //     res.status(403).json({ error: "Access denied" });
+    //     return;
+    //   }
+    // } else if (req.user?.role !== "SUPER_ADMIN") {
+    //   res.status(403).json({ error: "Access denied" });
+    //   return;
+    // }
 
     const category = await prisma.category.create({
-      data: { name, storeId: storeId as string },
+      data: { name: name.tolowerCase(), storeId: storeId as string },
     });
 
     res
@@ -37,9 +43,21 @@ export const createCategory = async (req: Request, res: Response) => {
 
 export const getCategories = async (req: Request, res: Response) => {
   try {
-    const categories = await prisma.category.findMany({
-      where: { storeId: req.params.storeId },
+    console.log("getCategories");
+    console.log(req.params);
+    const store = await prisma.store.findUnique({
+      where: { name: req.params.storeName },
     });
+
+    if (!store) {
+      res.status(404).json({ error: "Store not found" });
+      console.log("store not found");
+      return;
+    }
+    const categories = await prisma.category.findMany({
+      where: { storeId: store.id },
+    });
+    console.log(categories);
     res.status(200).json({ data: categories });
   } catch (error) {
     res.status(500).json({
@@ -58,16 +76,23 @@ export const updateCategory = async (req: Request, res: Response) => {
       where: { id },
       include: { store: true },
     });
-    if (!category) res.status(404).json({ error: "Category not found" });
-
-    if (
-      req.user?.role === "STORE_OWNER" &&
-      category?.store.ownerId !== req.user.id
-    ) {
-      res.status(403).json({ error: "Access denied" });
-    } else if (req.user?.role !== "SUPER_ADMIN") {
-      res.status(403).json({ error: "Access denied" });
+    if (!category) {
+      res.status(404).json({ error: "Category not found" });
+      return;
     }
+
+    // Tempory comment until authentication is added on frontend
+
+    // if (
+    //   req.user?.role === "STORE_OWNER" &&
+    //   category?.store.ownerId !== req.user.id
+    // ) {
+    //   res.status(403).json({ error: "Access denied" });
+    //   return;
+    // } else if (req.user?.role !== "SUPER_ADMIN") {
+    //   res.status(403).json({ error: "Access denied" });
+    //   return;
+    // }
 
     const updatedCategory = await prisma.category.update({
       where: { id },
@@ -92,16 +117,23 @@ export const deleteCategory = async (req: Request, res: Response) => {
       where: { id },
       include: { store: true },
     });
-    if (!category) res.status(404).json({ error: "Category not found" });
-
-    if (
-      req.user?.role === "STORE_OWNER" &&
-      category?.store.ownerId !== req.user.id
-    ) {
-      res.status(403).json({ error: "Access denied" });
-    } else if (req.user?.role !== "SUPER_ADMIN") {
-      res.status(403).json({ error: "Access denied" });
+    if (!category) {
+      res.status(404).json({ error: "Category not found" });
+      return;
     }
+
+    // Temporary comment until authentication is added on frontend
+
+    // if (
+    //   req.user?.role === "STORE_OWNER" &&
+    //   category?.store.ownerId !== req.user.id
+    // ) {
+    //   res.status(403).json({ error: "Access denied" });
+    //   return;
+    // } else if (req.user?.role !== "SUPER_ADMIN") {
+    //   res.status(403).json({ error: "Access denied" });
+    //   return;
+    // }
 
     await prisma.category.delete({ where: { id } });
     res.status(200).json({ message: "Category deleted successfully" });

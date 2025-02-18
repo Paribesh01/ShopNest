@@ -1,13 +1,14 @@
 import express from "express";
 import cors from "cors";
 import router from "./route";
-import { configDotenv } from "dotenv";
+import { config } from "dotenv";
 
 const app = express();
 
-configDotenv();
+config();
 
-app.use(cors());
+// app.use(cors());
+app.use(cors({ origin: 'http://localhost:3000', credentials: true }));
 app.use(express.json());
 
 app.get("/", (req, res) => {
