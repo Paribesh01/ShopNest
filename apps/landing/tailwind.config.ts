@@ -8,12 +8,52 @@ export default {
     "../../packages/ui/src/**/*.{js,ts,jsx,tsx,mdx}",
   ],
   theme: {
+    container: {
+      center: true,
+      padding: "2rem",
+      screens: {
+        "2xl": "1400px",
+      },
+    },
+    "../../packages/ui/src/**/*.{js,ts,jsx,tsx,mdx}",
+  ],
+
     extend: {
       colors: {
-        background: "var(--background)",
-        foreground: "var(--foreground)",
+        border: "hsl(var(--border))",
+        input: "hsl(var(--input))",
+        ring: "hsl(var(--ring))",
+        background: "hsl(var(--background))",
+        foreground: "hsl(var(--foreground))",
+        primary: {
+          DEFAULT: "hsl(150, 60%, 40%)",
+          foreground: "hsl(0, 0%, 98%)",
+        },
+        secondary: {
+          DEFAULT: "hsl(170, 50%, 45%)",
+          foreground: "hsl(0, 0%, 98%)",
+        },
+        muted: {
+          DEFAULT: "hsl(150, 20%, 96%)",
+          foreground: "hsl(150, 20%, 40%)",
+        },
+        accent: {
+          DEFAULT: "hsl(150, 40%, 95%)",
+          foreground: "hsl(150, 60%, 40%)",
+        },
+        custom: {
+          gradient1: "hsl(150, 60%, 40%)",
+          gradient2: "hsl(170, 50%, 45%)",
+          soft: "hsl(150, 60%, 97%)",
+          dark: "hsl(150, 30%, 20%)",
+          light: "hsl(150, 40%, 90%)",
+        }
+      },
+      borderRadius: {
+        lg: "var(--radius)",
+        md: "calc(var(--radius) - 2px)",
+        sm: "calc(var(--radius) - 4px)",
       },
     },
   },
-  plugins: [],
-} satisfies Config;
+} satisfies Config
