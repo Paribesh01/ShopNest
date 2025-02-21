@@ -1,10 +1,12 @@
 import axios from 'axios';
 import { Product } from './types';
 const API_BASE_URL = 'http://localhost:8080/api/v1';
+const CATEGORYNAME = 'Electronics';   // Temporary hardcoded
+const STORENAME = 'TechStore'   // Temporary hardcoded
 
 export const productApi = {
     getProductByStore: async (storeId : string) => {
-      const response = await axios.get<any>(`${API_BASE_URL}/product/stores/${storeId}`, {
+      const response = await axios.get<any>(`${API_BASE_URL}/product/stores/${STORENAME}`, {
         withCredentials: true
       });
       return response.data;

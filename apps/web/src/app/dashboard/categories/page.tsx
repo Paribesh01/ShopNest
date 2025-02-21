@@ -21,7 +21,7 @@ export default function categories() {
   const [selectedCategory, setSelectedCategory] = React.useState<Category | null>(null)
 
   // TODO: you should get this store information from recoil atom or some context
-  const [storeId, setStoreId] = React.useState<string>("cf89e91e-96f6-48df-ab82-d02667c3fc35");// It is hardcoded temporarily 
+  const [storeId, setStoreId] = React.useState<string>("1d3fe66f-50ac-4a02-a94c-20e7681d2f2e");// It is hardcoded temporarily 
 
   const fetchCategories = async () => {
 

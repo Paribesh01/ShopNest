@@ -21,7 +21,9 @@ productRouter.post(
   createProduct
 );
 
-productRouter.get("/", authenticateToken(), getAllProducts);
+productRouter.get("/",
+  //  authenticateToken(),
+  getAllProducts);
 
 productRouter.get("/:id", getProductById);
 

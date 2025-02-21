@@ -20,7 +20,6 @@ export const Login = async (req: Request, res: Response) => {
         password,
         user.password as string
       );
-
       if (isPasswordValid) {
         const token = jwt.sign(
           {

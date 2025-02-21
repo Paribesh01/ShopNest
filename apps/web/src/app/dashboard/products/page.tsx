@@ -22,7 +22,7 @@ export default function Products() {
   const { toast } = useToast()
 
   // Replace with your actual store From recoil atom or some context
-  const storeId = "cf89e91e-96f6-48df-ab82-d02667c3fc35"  // Temporarily hardcoded
+  const storeId = "1d3fe66f-50ac-4a02-a94c-20e7681d2f2e"  // Temporarily hardcoded
 
   const initialProductState: Product = {
     id: 0,
