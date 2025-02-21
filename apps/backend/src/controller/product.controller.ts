@@ -72,7 +72,7 @@ export const getProductByCategoryByStore = async (
   res: Response
 ) => {
   try {
-    console.log("getProductByCategoryByStore");
+    // console.log("getProductByCategoryByStore");
     const { storeName, categoryName } = req.params;
     const store = await prisma.store.findUnique({
       where: { name: storeName },
@@ -109,7 +109,7 @@ export const getProductByCategoryByStore = async (
 
 export const getProductsByStore = async (req: Request, res: Response) => {
   try {
-    console.log("getProductsByStore");
+    // console.log("getProductsByStore");
     const { storeName } = req.params;
     const store = await prisma.store.findUnique({
       where: { name: storeName },
@@ -124,7 +124,7 @@ export const getProductsByStore = async (req: Request, res: Response) => {
     const products = await prisma.product.findMany({
       where: { storeId: store.id },
     });
-    console.log(products);
+    // console.log(products);
     res.json({ data: products });
   } catch (error: unknown) {
     res.status(500).json({
