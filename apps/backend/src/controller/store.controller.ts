@@ -9,7 +9,7 @@ export const createStore = async (req: Request, res: Response) => {
       res.status(403).json({ error: "Access denied" });
       return;
     }
-    const { name } = req.body;
+    const { name }:{name : string} = req.body;
 
     const existingStore = await prisma.store.findUnique({
       where: { name },
@@ -20,7 +20,7 @@ export const createStore = async (req: Request, res: Response) => {
     }
     const store = await prisma.store.create({
       data: {
-        name: name.tolowerCase(),
+        name: name.toLowerCase(),
         ownerId: user.id,
       },
     });

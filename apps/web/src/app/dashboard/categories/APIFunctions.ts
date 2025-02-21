@@ -1,9 +1,10 @@
 import axios from 'axios';
 const API_BASE_URL = 'http://localhost:8080/api/v1';
+const STORENAME='TechStore' // Temporarily hardcoded
 
 export const categoryApi = {
     getAll: async () => {
-      const response = await axios.get<any>(`${API_BASE_URL}/category`, {
+      const response = await axios.get<any>(`${API_BASE_URL}/category/${STORENAME}`, {
         withCredentials: true
       });
       return response.data;

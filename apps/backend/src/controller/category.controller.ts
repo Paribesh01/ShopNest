@@ -1,10 +1,9 @@
 import { Request, Response } from "express";
 import { db as prisma } from "../db";
-import { string } from "zod";
 
 export const createCategory = async (req: Request, res: Response) => {
   try {
-    const { name } = req.body;
+    const { name } : {name : string} = req.body;
     const { storeId } = req.params;
 
     if (!storeId) {
@@ -18,16 +17,18 @@ export const createCategory = async (req: Request, res: Response) => {
     //     where: { id: storeId, ownerId: req.user.id },
     //   });
     //   if (!store) {
+    //     // console.log(`access denied 1`);
     //     res.status(403).json({ error: "Access denied" });
     //     return;
     //   }
     // } else if (req.user?.role !== "SUPER_ADMIN") {
+    //   console.log(`access denied 2`);
     //   res.status(403).json({ error: "Access denied" });
     //   return;
     // }
 
     const category = await prisma.category.create({
-      data: { name: name.tolowerCase(), storeId: storeId as string },
+      data: { name: name.toLowerCase(), storeId: storeId as string },
     });
 
     res
@@ -43,8 +44,8 @@ export const createCategory = async (req: Request, res: Response) => {
 
 export const getCategories = async (req: Request, res: Response) => {
   try {
-    console.log("getCategories");
-    console.log(req.params);
+    // console.log("getCategories");
+    // console.log(req.params);
     const store = await prisma.store.findUnique({
       where: { name: req.params.storeName },
     });
@@ -57,7 +58,7 @@ export const getCategories = async (req: Request, res: Response) => {
     const categories = await prisma.category.findMany({
       where: { storeId: store.id },
     });
-    console.log(categories);
+    // console.log(categories);
     res.status(200).json({ data: categories });
   } catch (error) {
     res.status(500).json({
