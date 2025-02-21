@@ -31,5 +31,11 @@ export const productApi = {
         withCredentials: true
       });
       return response.data;
-    }
+    },
+    getCategoriesByStoreName : async () => {
+      const response = await axios.get<any>(`${API_BASE_URL}/category/${STORENAME}`, {
+        withCredentials: true
+      });
+      return response.data;
+    },
   };

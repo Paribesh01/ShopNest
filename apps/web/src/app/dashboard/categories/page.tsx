@@ -13,7 +13,6 @@ import { useToast } from "@repo/ui/use-toast"
 import { CategoryForm } from "./category-form"
 
 export default function categories() {
-  const router = useRouter()
   const { toast } = useToast()
   const [categories, setCategories] = React.useState<Category[]>([])
   const [isLoading, setIsLoading] = React.useState(true)

@@ -2,7 +2,7 @@
 
 import type React from "react"
 
-import { useState, useEffect } from "react"
+import { useState, useEffect, useMemo } from "react"
 import { Pencil, Trash2, Plus } from "lucide-react"
 import type { Product } from "./types"
 import { productApi } from "./APIFunctions"
@@ -13,6 +13,7 @@ import { Input } from "@repo/ui/input"
 import { Label } from "@repo/ui/label"
 import { Textarea } from "@repo/ui/textarea"
 import { useToast } from "@repo/ui/use-toast"
+import ProductForm from "./Product-form"
 
 export default function Products() {
   const [products, setProducts] = useState<Product[]>([])
@@ -24,7 +25,7 @@ export default function Products() {
   // Replace with your actual store From recoil atom or some context
   const storeId = "1d3fe66f-50ac-4a02-a94c-20e7681d2f2e"  // Temporarily hardcoded
 
-  const initialProductState: Product = {
+  const initialProductState: Product = useMemo<Product>(() => ({
     id: 0,
     name: "",
     description: "",
@@ -32,9 +33,9 @@ export default function Products() {
     stock: 0,
     imageUrl: "",
     categoryId: "",
-  }
+  }), []);
 
-  const [formData, setFormData] = useState<Product>(initialProductState)
+  const [formData, setFormData] = useState<Product>(initialProductState);
 
   useEffect(() => {
     fetchProducts()
@@ -42,50 +43,14 @@ export default function Products() {
 
   const fetchProducts = async () => {
     try {
-      const data = await productApi.getProductByStore(storeId)
+      const data = await productApi.getProductByStore(storeId);
+      console.log(data.data);
       setProducts(data.data)
     } catch (error) {
       toast({
         variant: "destructive",
         title: "Error",
         description: "Failed to fetch products",
-      })
-    }
-  }
-
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault()
-
-    const sanitizedData = {
-      ...formData,
-      price: Number(formData.price) || 0,
-      stock: Number(formData.stock) || 0,
-    }
-
-    try {
-      if (currentProduct) {
-        console.log(formData);
-        await productApi.update(currentProduct.id.toString(), sanitizedData)
-        toast({
-          title: "Success",
-          description: "Product updated successfully",
-        })
-        setIsEditOpen(false)
-      } else {
-        await productApi.createProduct(storeId, sanitizedData)
-        toast({
-          title: "Success",
-          description: "Product created successfully",
-        })
-        setIsOpen(false)
-      }
-      fetchProducts()
-      setFormData(initialProductState)
-    } catch (error) {
-      toast({
-        variant: "destructive",
-        title: "Error",
-        description: "Operation failed",
       })
     }
   }
@@ -114,71 +79,6 @@ export default function Products() {
     setIsEditOpen(true)
   }
 
-  const ProductForm = () => (
-    <form onSubmit={handleSubmit} className="space-y-4">
-      <div className="grid gap-2">
-        <Label htmlFor="name">Name</Label>
-        <Input
-          id="name"
-          value={formData.name}
-          onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-          required
-        />
-      </div>
-      <div className="grid gap-2">
-        <Label htmlFor="description">Description</Label>
-        <Textarea
-          id="description"
-          value={formData.description}
-          onChange={(e) => setFormData({ ...formData, description: e.target.value })}
-          required
-        />
-      </div>
-      <div className="grid gap-2">
-        <Label htmlFor="price">Price</Label>
-        <Input
-          id="price"
-          type="number"
-          value={formData.price}
-          onChange={(e) => setFormData({ ...formData, price: Number.parseInt(e.target.value) || 0 })}
-          required
-        />
-      </div>
-      <div className="grid gap-2">
-        <Label htmlFor="stock">Stock</Label>
-        <Input
-          id="stock"
-          type="number"
-          value={formData.stock}
-          onChange={(e) => setFormData({ ...formData, stock: Number.parseInt(e.target.value) })}
-          required
-        />
-      </div>
-      <div className="grid gap-2">
-        <Label htmlFor="imageUrl">Image URL</Label>
-        <Input
-          id="imageUrl"
-          type="url"
-          value={formData.imageUrl}
-          onChange={(e) => setFormData({ ...formData, imageUrl: e.target.value })}
-          required
-        />
-      </div>
-      <div className="grid gap-2">
-        <Label htmlFor="categoryId">Category ID</Label>
-        <Input
-          id="categoryId"
-          value={formData.categoryId}
-          onChange={(e) => setFormData({ ...formData, categoryId: e.target.value })}
-          required
-        />
-      </div>
-      <Button type="submit" className="w-full">
-        {currentProduct ? "Update Product" : "Add Product"}
-      </Button>
-    </form>
-  )
-
   return (
     <div className="container mx-auto py-10">
       <div className="flex justify-between items-center mb-6">
@@ -194,7 +94,13 @@ export default function Products() {
             <DialogHeader>
               <DialogTitle>Add New Product</DialogTitle>
             </DialogHeader>
-            <ProductForm />
+            {/* <ProductForm /> */}
+            <ProductForm
+              currentProduct={currentProduct}
+              setIsEditOpen={setIsEditOpen}
+              storeId={storeId}
+              setIsOpen={setIsOpen}
+              fetchProducts={fetchProducts} />
           </DialogContent>
         </Dialog>
       </div>
