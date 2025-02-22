@@ -1,7 +1,9 @@
 export default function Home() {
   return (
     <>
-      <div>Home page </div>
+      <div>Home page
+          random thing 
+         </div>
     </>
   );
 }
