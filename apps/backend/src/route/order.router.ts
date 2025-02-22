@@ -19,7 +19,9 @@ const orderRouter = express.Router();
 
 orderRouter.post("/:storeId", validateSchema(createOrderSchema), createOrder);
 
-orderRouter.get("/:storeId", authenticateToken(), getStoreOrders);
+orderRouter.get("/:storeId", 
+  // authenticateToken(), 
+  getStoreOrders);
 
 orderRouter.patch(
   "/:id/status",

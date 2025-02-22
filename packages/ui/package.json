@@ -25,7 +25,8 @@
     "./separator": "./src/separator.tsx",
     "./radio-group": "./src/radio-group.tsx",
     "./textarea": "./src/textarea.tsx",
-    "./aspect-ratio": "./src/aspect-ratio.tsx"
+    "./aspect-ratio": "./src/aspect-ratio.tsx",
+    "./skeleton" : "./src/skeleton.tsx"
   },
   "scripts": {
     "lint": "eslint . --max-warnings 0",
@@ -40,8 +41,8 @@
     "@types/react": "^18.2.55",
     "@types/react-dom": "^18.2.19",
     "autoprefixer": "^10.4.16",
-    "postcss": "^8.4.33",
-    "tailwindcss": "^3.4.1",
+    "postcss": "^8.5.3",
+    "tailwindcss": "^3.4.17",
     "typescript": "^5.3.3"
   },
   "dependencies": {
@@ -56,6 +57,7 @@
     "@radix-ui/react-slot": "^1.1.2",
     "@radix-ui/react-toast": "^1.2.6",
     "@radix-ui/react-tooltip": "^1.1.8",
+    "@tailwindcss/postcss": "^4.0.8",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "input-otp": "^1.4.2",
