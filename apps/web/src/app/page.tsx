@@ -3,6 +3,7 @@ export default function Home() {
     <>
       <div>Home page
           random thing 
+          random thing 2
          </div>
     </>
   );
