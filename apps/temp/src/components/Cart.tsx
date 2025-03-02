@@ -1,17 +1,9 @@
 "use client";
 
-import { useState } from "react";
-import Image from "next/image";
-import { ShoppingCart, Plus, Minus, Trash2 } from "lucide-react";
+import { Plus, Minus, Trash2 } from "lucide-react";
 import { Button } from "@repo/ui/button";
 
-import {
-  Sheet,
-  SheetContent,
-  SheetHeader,
-  SheetTitle,
-  SheetTrigger,
-} from "@repo/ui/sheet";
+import { Sheet, SheetContent, SheetHeader, SheetTitle } from "@repo/ui/sheet";
 import { Separator } from "@repo/ui/separator";
 import { useRecoilState } from "recoil";
 import { cartItemState, cartState } from "@/recoil/atom";

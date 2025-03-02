@@ -4,20 +4,11 @@ export default {
   content: [
     "./src/pages/**/*.{js,ts,jsx,tsx,mdx}",
     "./src/components/**/*.{js,ts,jsx,tsx,mdx}",
-    "./src/app/**/*.{js,ts,jsx,tsx,mdx}",
+    "./src/app/**/**/**/**/*.{js,ts,jsx,tsx,mdx}",
     "../../packages/ui/src/**/*.{js,ts,jsx,tsx,mdx}",
+    "./components/**/*.{js,ts,jsx,tsx,mdx}",
   ],
   theme: {
-    container: {
-      center: true,
-      padding: "2rem",
-      screens: {
-        "2xl": "1400px",
-      },
-    },
-    "../../packages/ui/src/**/*.{js,ts,jsx,tsx,mdx}",
-  ],
-
     extend: {
       colors: {
         border: "hsl(var(--border))",
@@ -47,7 +38,7 @@ export default {
           soft: "hsl(150, 60%, 97%)",
           dark: "hsl(150, 30%, 20%)",
           light: "hsl(150, 40%, 90%)",
-        }
+        },
       },
       borderRadius: {
         lg: "var(--radius)",
@@ -56,4 +47,5 @@ export default {
       },
     },
   },
-} satisfies Config
+  plugins: [],
+} satisfies Config;

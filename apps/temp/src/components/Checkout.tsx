@@ -18,8 +18,6 @@ import { useRecoilState } from "recoil";
 import { cartItemState } from "@/recoil/atom";
 import { useRouter } from "next/navigation";
 
-import { RadioGroup, RadioGroupItem } from "@repo/ui/radio-group";
-
 export default function Checkout() {
   const [cartItems, setCartItems] = useRecoilState<any>(cartItemState);
   const [loading, setLoading] = useState(false);
